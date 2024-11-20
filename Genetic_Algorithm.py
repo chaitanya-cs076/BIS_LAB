@@ -1,3 +1,6 @@
+f(x)=xsin(x)
+
+
 import numpy as np
 import random
 
