@@ -1,9 +1,9 @@
-#Aerodynamics
+# Aerodynamics
+
 
 import numpy as np
 
 # Define the objective function: A simplified "drag function" that we aim to minimize
-# This function is a placeholder and would be replaced by a real drag model in practice
 def drag_function(x):
     # x[0]: curvature, x[1]: width, x[2]: slope
     # A hypothetical drag equation (for demonstration purposes)
@@ -11,7 +11,6 @@ def drag_function(x):
 
 # Lévy flight function using numpy for Gamma and other computations
 def gamma_function(x):
-    # Approximation of the gamma function using numpy (for small integer inputs)
     if x == 0.5:
         return np.sqrt(np.pi)  # Special case for gamma(1/2)
     elif x == 1:
@@ -19,23 +18,20 @@ def gamma_function(x):
     elif x == 2:
         return 1  # Special case for gamma(2)
     else:
-        # Using numpy's factorial for integer values and for float values using approximation
         return np.math.factorial(int(x) - 1) if x.is_integer() else np.inf
 
 def levy_flight(Lambda):
     sigma = (gamma_function(1 + Lambda) * np.sin(np.pi * Lambda / 2) /
              (gamma_function((1 + Lambda) / 2) * Lambda * 2 ** ((Lambda - 1) / 2))) ** (1 / Lambda)
-    u = np.random.randn() * sigma  # Using normal distribution to generate u
-    v = np.random.randn()  # Standard normal distribution for v
+    u = np.random.randn() * sigma
+    v = np.random.randn()
     step = u / abs(v) ** (1 / Lambda)
     return step
 
 # Cuckoo Search Algorithm
-def cuckoo_search(n=15, iterations=100, pa=0.25):
+def cuckoo_search(n, iterations, pa, lower_bound, upper_bound):
     # Initialize nests randomly
     dim = 3  # Number of design parameters
-    lower_bound = -10
-    upper_bound = 10
     nests = np.random.uniform(lower_bound, upper_bound, (n, dim))
    
     # Evaluate fitness of initial nests
@@ -69,7 +65,19 @@ def cuckoo_search(n=15, iterations=100, pa=0.25):
 
     return best_nest, best_fitness
 
+# Gather user input for the algorithm
+print("Welcome to the Aerodynamics Optimization using Cuckoo Search!")
+n = int(input("Enter the number of nests (population size): "))
+iterations = int(input("Enter the number of iterations: "))
+pa = float(input("Enter the probability of abandonment (between 0 and 1): "))
+lower_bound = float(input("Enter the lower bound for the design parameters: "))
+upper_bound = float(input("Enter the upper bound for the design parameters: "))
+
 # Run the Cuckoo Search algorithm
-best_solution, best_drag_value = cuckoo_search()
+best_solution, best_drag_value = cuckoo_search(n, iterations, pa, lower_bound, upper_bound)
+
+# Display the result
+print("\nOptimization Results:")
 print("Best Solution (Design Parameters):", best_solution)
 print("Best Drag Value:", best_drag_value)
+
