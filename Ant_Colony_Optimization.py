@@ -1,4 +1,4 @@
-#Travelling Sales MAn
+#Travelling Sales Man
 
 import numpy as np
 import random
