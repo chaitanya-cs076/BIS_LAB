@@ -1,5 +1,6 @@
 #Travelling Sales Man
 
+
 import numpy as np
 import random
 
@@ -96,6 +97,7 @@ def update_pheromones(pheromone, paths, distances, rho, best_solution, best_dist
     return pheromone
 
 # Input the distance matrix and parameters from the user
+print("Ant Colony Application for Travelling Sales Man Problem")
 num_cities = int(input("Enter the number of cities: "))
 distance_matrix = []
 print("Enter the distance matrix (row by row):")
@@ -118,4 +120,3 @@ best_solution, best_distance = ant_colony_optimization(
 # Display the results
 print("Best Solution (Path):", list(map(int, best_solution)))  # Fix for clean output
 print("Best Distance:", best_distance)
-
